@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="越來越南">
+<title>越來越南</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar">
+  <a href="#/" id="back" aria-label="返回">‹</a>
+  <h1 id="title">越來越南</h1>
+  <span id="clock"></span>
+</header>
+
+<main id="view" aria-live="polite">
+  <p class="loading">載入中…</p>
+</main>
+
+<nav id="tabbar">
+  <a href="#/" data-route="home"><span>🏠</span>主頁</a>
+  <a href="#/itinerary" data-route="itinerary"><span>📅</span>行程</a>
+  <a href="#/history" data-route="history"><span>📜</span>歷史</a>
+  <a href="#/nearby" data-route="nearby"><span>📍</span>附近</a>
+  <a href="#/reading" data-route="reading"><span>🔗</span>閱讀</a>
+</nav>
+
+<div id="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

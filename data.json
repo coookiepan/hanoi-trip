@@ -1,0 +1,1036 @@
+{
+ "trip": {
+  "title": "越來越南",
+  "start": "2026-12-19",
+  "end": "2026-12-27",
+  "timezone": "Asia/Ho_Chi_Minh"
+ },
+ "days": [
+  {
+   "day": 1,
+   "date": "12/19",
+   "weekday": "六",
+   "area": "河內",
+   "stay": "Gerbera Living Space（Ba Đình）",
+   "items": [
+    {
+     "time": "12:10–14:10",
+     "type": "交通",
+     "title": "去程班機 桃園 → 河內",
+     "note": "桃園第一航廈 → 內排機場，A321，飛行 3 小時。手提 7 kg、託運 20 kg",
+     "status": "已訂"
+    },
+    {
+     "time": "14:30–16:00",
+     "type": "交通",
+     "title": "內排機場 → 市區住宿",
+     "note": "Grab 20–30 萬盾／車（約 NT$260–390），40–60 分；86 號公車 4.5 萬盾／人",
+     "status": "固定"
+    },
+    {
+     "time": "下午",
+     "type": "住宿",
+     "title": "入住 Gerbera Living Space",
+     "note": "15 Ng. Châu Long, Quán Thánh, Ba Đình｜14:00 入住、11:00 退房",
+     "status": "已訂",
+     "placeId": "gerbera-1"
+    },
+    {
+     "time": "下午",
+     "type": "其他",
+     "title": "換錢",
+     "note": "面額很多，看小數點前面比較清楚",
+     "status": "固定"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐：Pizza 4P's",
+     "note": "分店很多，12 月初訂位（淳）",
+     "status": "未訂",
+     "placeId": "pizza-4ps"
+    }
+   ]
+  },
+  {
+   "day": 2,
+   "date": "12/20",
+   "weekday": "日",
+   "area": "河內",
+   "stay": "Gerbera Living Space（Ba Đình）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "餐飲",
+     "title": "早餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "整天",
+     "type": "景點",
+     "title": "河內城區 tour",
+     "note": "老城區、胡志明陵寢、火爐監獄（淳寄信約）。陵寢開放時間與服裝規定出發前確認",
+     "status": "未訂",
+     "placeId": "hoa-lo"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐",
+     "note": "可請導遊推薦",
+     "status": "未訂"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐：Red Bean Ma May",
+     "note": "11/20 開始可訂位（薇）",
+     "status": "未訂",
+     "placeId": "red-bean"
+    }
+   ]
+  },
+  {
+   "day": 3,
+   "date": "12/21",
+   "weekday": "一",
+   "area": "寧平",
+   "stay": "寧平住宿（Tam Cốc）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "住宿",
+     "title": "退房",
+     "note": "8:00 的火車，要提早出門",
+     "status": "固定"
+    },
+    {
+     "time": "08:00–10:13",
+     "type": "交通",
+     "title": "SE5 火車 河內 → 寧平",
+     "note": "Vexere App 電子車票；車票 PDF 印出來或 QR Code 截圖存手機（淳印）",
+     "status": "未訂"
+    },
+    {
+     "time": "上午",
+     "type": "住宿",
+     "title": "寧平住宿 寄放行李／入住",
+     "note": "Đội 1 Văn Lâm, Ninh Hải, Hoa Lư（薇訂）",
+     "status": "未訂"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "下午",
+     "type": "景點",
+     "title": "三谷碧洞",
+     "note": "搭船穿過洞穴",
+     "status": "選項",
+     "placeId": "tam-coc"
+    },
+    {
+     "time": "下午",
+     "type": "景點",
+     "title": "碧洞古寺",
+     "note": "",
+     "status": "選項",
+     "placeId": "bich-dong"
+    },
+    {
+     "time": "下午",
+     "type": "景點",
+     "title": "爬小山坡",
+     "note": "可以眺望寧平",
+     "status": "選項",
+     "placeId": "hang-mua"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "",
+     "status": "未訂"
+    }
+   ]
+  },
+  {
+   "day": 4,
+   "date": "12/22",
+   "weekday": "二",
+   "area": "寧平",
+   "stay": "寧平住宿（Tam Cốc）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "餐飲",
+     "title": "早餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "整天",
+     "type": "景點",
+     "title": "寧平第二天（行程待排）",
+     "note": "12/21 沒走完的景點可以排到今天",
+     "status": "選項"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "",
+     "status": "未訂"
+    }
+   ]
+  },
+  {
+   "day": 5,
+   "date": "12/23",
+   "weekday": "三",
+   "area": "寧平 → 河內",
+   "stay": "Gerbera 2（Hoàn Kiếm）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "住宿",
+     "title": "退房",
+     "note": "10:00 前到 Lapis Tam Coc Restaurant 上車",
+     "status": "固定"
+    },
+    {
+     "time": "10:00–12:00",
+     "type": "交通",
+     "title": "Daiichi Travel 巴士 寧平 → 河內",
+     "note": "上車 Lapis Tam Coc Restaurant｜下車 172 Tran Quang Khai｜用 WhatsApp 確認上下車地點（淳）",
+     "status": "未訂"
+    },
+    {
+     "time": "12:00–13:00",
+     "type": "住宿",
+     "title": "Gerbera 2 寄放行李／入住",
+     "note": "21 Hàng Đậu, Đồng Xuân, Hoàn Kiếm｜14:00 入住、11:00 退房",
+     "status": "已訂",
+     "placeId": "gerbera-2"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "13:00–16:30",
+     "type": "景點",
+     "title": "越南軍事歷史博物館",
+     "note": "時間可能來不及，先確認開放時間與車程",
+     "status": "選項",
+     "placeId": "military-museum"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "",
+     "status": "未訂"
+    }
+   ]
+  },
+  {
+   "day": 6,
+   "date": "12/24",
+   "weekday": "四",
+   "area": "河內",
+   "stay": "Gerbera 2（Hoàn Kiếm）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "餐飲",
+     "title": "早餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "早上",
+     "type": "景點",
+     "title": "逛街買禮物",
+     "note": "晚上交換禮物用",
+     "status": "選項"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐：La Badiane（法餐）",
+     "note": "米其林推薦，午餐約 NT$1,000 多／人，可用 Facebook 預約（姵）",
+     "status": "未訂",
+     "placeId": "la-badiane"
+    },
+    {
+     "time": "下午",
+     "type": "景點",
+     "title": "老城區",
+     "note": "",
+     "status": "選項"
+    },
+    {
+     "time": "19:00",
+     "type": "景點",
+     "title": "火車街",
+     "note": "火車通過時間出發前再確認；和彌撒時間可能衝突",
+     "status": "選項",
+     "placeId": "train-street"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "晚上",
+     "type": "景點",
+     "title": "聖若瑟大教堂 平安夜彌撒",
+     "note": "近一點再查彌撒時間表",
+     "status": "選項",
+     "placeId": "st-joseph"
+    },
+    {
+     "time": "晚上",
+     "type": "其他",
+     "title": "交換禮物",
+     "note": "回住宿進行",
+     "status": "固定"
+    }
+   ]
+  },
+  {
+   "day": 7,
+   "date": "12/25",
+   "weekday": "五",
+   "area": "河內",
+   "stay": "Gerbera 2（Hoàn Kiếm）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "餐飲",
+     "title": "早餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "整天",
+     "type": "其他",
+     "title": "聖誕節（行程待排）",
+     "note": "下面是從潘的清單挑的候選",
+     "status": "選項"
+    },
+    {
+     "time": "",
+     "type": "景點",
+     "title": "昇龍皇城",
+     "note": "中國統治到多王朝獨立",
+     "status": "選項",
+     "placeId": "thang-long"
+    },
+    {
+     "time": "",
+     "type": "景點",
+     "title": "河內文廟",
+     "note": "儒教",
+     "status": "選項",
+     "placeId": "temple-literature"
+    },
+    {
+     "time": "",
+     "type": "景點",
+     "title": "鎮國寺",
+     "note": "佛教",
+     "status": "選項",
+     "placeId": "tran-quoc"
+    },
+    {
+     "time": "",
+     "type": "景點",
+     "title": "河內歌劇院・國家歷史博物館",
+     "note": "法殖民時期建築",
+     "status": "選項",
+     "placeId": "opera-house"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐",
+     "note": "候選：Pho 10 Ly Quoc Su",
+     "status": "未訂",
+     "placeId": "pho-10"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "想吃米其林：Gia（至少 NT$5,000）、T.U.N.G dining（約 NT$4,000），都要先訂位",
+     "status": "未訂"
+    }
+   ]
+  },
+  {
+   "day": 8,
+   "date": "12/26",
+   "weekday": "六",
+   "area": "河內",
+   "stay": "Gerbera 2（Hoàn Kiếm）",
+   "items": [
+    {
+     "time": "早上",
+     "type": "餐飲",
+     "title": "早餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "",
+     "type": "餐飲",
+     "title": "椰子咖啡：Cộng Cà Phê",
+     "note": "116 P. Cầu Gỗ",
+     "status": "選項",
+     "placeId": "cong-caphe"
+    },
+    {
+     "time": "",
+     "type": "餐飲",
+     "title": "蛋咖啡：Café Giảng",
+     "note": "39 P. Nguyễn Hữu Huân",
+     "status": "選項",
+     "placeId": "cafe-giang"
+    },
+    {
+     "time": "",
+     "type": "餐飲",
+     "title": "GAD8 COFFEE & STUDIO",
+     "note": "",
+     "status": "選項"
+    },
+    {
+     "time": "",
+     "type": "餐飲",
+     "title": "越南甜點：Chè Lộc Tài",
+     "note": "76 P. Cửa Đông",
+     "status": "選項",
+     "placeId": "che-loc-tai"
+    },
+    {
+     "time": "中午",
+     "type": "餐飲",
+     "title": "午餐：米其林推薦越南料理",
+     "note": "店名待補",
+     "status": "未訂"
+    },
+    {
+     "time": "下午",
+     "type": "景點",
+     "title": "三十六古街",
+     "note": "市場巷弄，時間留寬一點",
+     "status": "選項",
+     "placeId": "old-quarter"
+    },
+    {
+     "time": "晚上",
+     "type": "餐飲",
+     "title": "晚餐",
+     "note": "",
+     "status": "未訂"
+    },
+    {
+     "time": "晚上",
+     "type": "其他",
+     "title": "整理行李",
+     "note": "前一晚先約好去機場的車",
+     "status": "固定"
+    }
+   ]
+  },
+  {
+   "day": 9,
+   "date": "12/27",
+   "weekday": "日",
+   "area": "河內 → 桃園",
+   "stay": "",
+   "items": [
+    {
+     "time": "清晨",
+     "type": "交通",
+     "title": "住宿 → 內排機場",
+     "note": "Grab 約 40–60 分；出門時間照報到截止往回推",
+     "status": "固定"
+    },
+    {
+     "time": "07:35–11:10",
+     "type": "交通",
+     "title": "回程班機 河內 → 桃園",
+     "note": "A321，飛行 2 小時 35 分",
+     "status": "已訂"
+    }
+   ]
+  }
+ ],
+ "places": [
+  {
+   "id": "gerbera-1",
+   "name": "Gerbera Living Space",
+   "nameLocal": "15 Ng. Châu Long, Ba Đình",
+   "category": "住宿",
+   "lat": 21.0432,
+   "lng": 105.8432,
+   "hours": {},
+   "price": "",
+   "intro": "12/19–12/21 住宿",
+   "recommendedBy": "",
+   "links": [
+    "https://www.airbnb.com.tw/rooms/1552726584548877069"
+   ],
+   "area": "Ba Đình"
+  },
+  {
+   "id": "gerbera-2",
+   "name": "Gerbera 2",
+   "nameLocal": "21 Hàng Đậu, Hoàn Kiếm",
+   "category": "住宿",
+   "lat": 21.0398,
+   "lng": 105.8484,
+   "hours": {},
+   "price": "",
+   "intro": "12/23–12/27 住宿",
+   "recommendedBy": "",
+   "links": [
+    "https://www.airbnb.com.tw/rooms/800491070058223772"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "hoa-lo",
+   "name": "火爐監獄",
+   "nameLocal": "Nhà tù Hỏa Lò",
+   "category": "景點",
+   "lat": 21.0253,
+   "lng": 105.8463,
+   "hours": {
+    "mon-sun": "08:00-17:00"
+   },
+   "price": "約 NT$60",
+   "intro": "法殖民時期監獄，越戰時關押美軍飛行員。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "thang-long",
+   "name": "昇龍皇城",
+   "nameLocal": "Hoàng thành Thăng Long",
+   "category": "景點",
+   "lat": 21.0352,
+   "lng": 105.8403,
+   "hours": {
+    "mon-sun": "08:00-17:00"
+   },
+   "price": "約 NT$40",
+   "intro": "李朝起的皇城遺址，世界遺產。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "temple-literature",
+   "name": "河內文廟",
+   "nameLocal": "Văn Miếu",
+   "category": "景點",
+   "lat": 21.0288,
+   "lng": 105.8355,
+   "hours": {
+    "mon-sun": "08:00-17:00"
+   },
+   "price": "約 NT$40",
+   "intro": "越南第一所大學。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "tran-quoc",
+   "name": "鎮國寺",
+   "nameLocal": "Chùa Trấn Quốc",
+   "category": "景點",
+   "lat": 21.0481,
+   "lng": 105.8367,
+   "hours": {
+    "mon-sun": "07:30-11:30,13:30-18:00"
+   },
+   "price": "免費",
+   "intro": "西湖畔最古老的寺院。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "西湖"
+  },
+  {
+   "id": "opera-house",
+   "name": "河內歌劇院",
+   "nameLocal": "Nhà hát Lớn Hà Nội",
+   "category": "景點",
+   "lat": 21.0244,
+   "lng": 105.8575,
+   "hours": {},
+   "price": "",
+   "intro": "法殖民時期建築。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "military-museum",
+   "name": "越南軍事歷史博物館",
+   "nameLocal": "Bảo tàng Lịch sử Quân sự Việt Nam",
+   "category": "景點",
+   "lat": 21.0012,
+   "lng": 105.7583,
+   "hours": {
+    "tue-sun": "08:00-11:30,13:00-16:30",
+    "mon": "休"
+   },
+   "price": "免費",
+   "intro": "2024 年新館。（內容待補）",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "南慈廉"
+  },
+  {
+   "id": "st-joseph",
+   "name": "聖若瑟大教堂",
+   "nameLocal": "Nhà thờ Lớn Hà Nội",
+   "category": "景點",
+   "lat": 21.0288,
+   "lng": 105.849,
+   "hours": {
+    "mon-sun": "08:00-11:00,14:00-17:00"
+   },
+   "price": "免費",
+   "intro": "平安夜彌撒時間待查。",
+   "recommendedBy": "潘",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "train-street",
+   "name": "火車街",
+   "nameLocal": "Phố đường tàu",
+   "category": "景點",
+   "lat": 21.031,
+   "lng": 105.8426,
+   "hours": {},
+   "price": "",
+   "intro": "火車通過時間待確認。",
+   "recommendedBy": "淳",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "old-quarter",
+   "name": "三十六古街",
+   "nameLocal": "Phố cổ Hà Nội",
+   "category": "景點",
+   "lat": 21.0338,
+   "lng": 105.85,
+   "hours": {},
+   "price": "",
+   "intro": "",
+   "recommendedBy": "淳",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "tam-coc",
+   "name": "三谷碧洞",
+   "nameLocal": "Tam Cốc",
+   "category": "景點",
+   "lat": 20.2155,
+   "lng": 105.9345,
+   "hours": {
+    "mon-sun": "07:00-17:00"
+   },
+   "price": "",
+   "intro": "搭船穿過洞穴。",
+   "recommendedBy": "",
+   "links": [
+    "https://maps.app.goo.gl/W99kYCUGWKG5DMKP8"
+   ],
+   "area": "寧平"
+  },
+  {
+   "id": "bich-dong",
+   "name": "碧洞古寺",
+   "nameLocal": "Chùa Bích Động",
+   "category": "景點",
+   "lat": 20.2064,
+   "lng": 105.9208,
+   "hours": {
+    "mon-sun": "07:00-17:00"
+   },
+   "price": "",
+   "intro": "",
+   "recommendedBy": "",
+   "links": [
+    "https://maps.app.goo.gl/cFnbJSbHJQw4D5Na8"
+   ],
+   "area": "寧平"
+  },
+  {
+   "id": "hang-mua",
+   "name": "臥龍山（Hang Múa）",
+   "nameLocal": "Hang Múa",
+   "category": "景點",
+   "lat": 20.2272,
+   "lng": 105.934,
+   "hours": {
+    "mon-sun": "06:00-19:00"
+   },
+   "price": "",
+   "intro": "爬小山坡，可以眺望寧平。",
+   "recommendedBy": "",
+   "links": [
+    "https://maps.app.goo.gl/DdXFSmZShqe8F2PB7"
+   ],
+   "area": "寧平"
+  },
+  {
+   "id": "pizza-4ps",
+   "name": "Pizza 4P's",
+   "nameLocal": "Pizza 4P's",
+   "category": "小吃",
+   "lat": 21.0279,
+   "lng": 105.8521,
+   "hours": {
+    "mon-sun": "10:00-22:00"
+   },
+   "price": "",
+   "intro": "分店很多。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/K2exT92FSrkSDrCX8"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "red-bean",
+   "name": "Red Bean Ma May",
+   "nameLocal": "Red Bean Restaurant",
+   "category": "小吃",
+   "lat": 21.035,
+   "lng": 105.852,
+   "hours": {
+    "mon-sun": "11:00-22:00"
+   },
+   "price": "",
+   "intro": "11/20 開始可訂位。",
+   "recommendedBy": "薇",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "la-badiane",
+   "name": "La Badiane",
+   "nameLocal": "La Badiane",
+   "category": "小吃",
+   "lat": 21.0272,
+   "lng": 105.8452,
+   "hours": {
+    "mon-sat": "11:30-14:00,18:00-22:00",
+    "sun": "休"
+   },
+   "price": "午餐約 NT$1,000 多",
+   "intro": "米其林推薦法餐。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://www.facebook.com/labadiane"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "pho-10",
+   "name": "Pho 10 Ly Quoc Su",
+   "nameLocal": "Phở 10 Lý Quốc Sư",
+   "category": "小吃",
+   "lat": 21.0295,
+   "lng": 105.8485,
+   "hours": {
+    "mon-sun": "06:00-22:00"
+   },
+   "price": "",
+   "intro": "米其林推薦河粉。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/Xki34mifYnfL2cry7"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "cong-caphe",
+   "name": "Cộng Cà Phê（Cầu Gỗ）",
+   "nameLocal": "116 P. Cầu Gỗ",
+   "category": "小吃",
+   "lat": 21.0318,
+   "lng": 105.8527,
+   "hours": {
+    "mon-sun": "07:00-23:00"
+   },
+   "price": "",
+   "intro": "椰子咖啡。",
+   "recommendedBy": "",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "cafe-giang",
+   "name": "Café Giảng",
+   "nameLocal": "39 P. Nguyễn Hữu Huân",
+   "category": "小吃",
+   "lat": 21.0335,
+   "lng": 105.854,
+   "hours": {
+    "mon-sun": "07:00-22:00"
+   },
+   "price": "",
+   "intro": "蛋咖啡。",
+   "recommendedBy": "",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "che-loc-tai",
+   "name": "Chè Lộc Tài",
+   "nameLocal": "76 P. Cửa Đông",
+   "category": "小吃",
+   "lat": 21.0333,
+   "lng": 105.846,
+   "hours": {
+    "mon-sun": "09:00-23:00"
+   },
+   "price": "",
+   "intro": "越南甜點。",
+   "recommendedBy": "",
+   "links": [],
+   "area": "河內老城區"
+  },
+  {
+   "id": "raw-compound",
+   "name": "THE RAW COMPOUND",
+   "nameLocal": "THE RAW COMPOUND",
+   "category": "逛街",
+   "lat": 21.018,
+   "lng": 105.845,
+   "hours": {
+    "mon-sun": "09:00-21:00"
+   },
+   "price": "",
+   "intro": "集合多個設計師品牌，偏個性與潮流感。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/dBJdvMHG2UNdrtYDA"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "objects-hanoi",
+   "name": "oBJECTs Hanoi Concept Store",
+   "nameLocal": "oBJECTs Hanoi",
+   "category": "逛街",
+   "lat": 21.03,
+   "lng": 105.847,
+   "hours": {
+    "mon-sun": "09:00-21:00"
+   },
+   "price": "",
+   "intro": "",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/XwgMhDegBgtmVmKQ6"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "humanity",
+   "name": "Humanity Hanoi",
+   "nameLocal": "Humanity Hanoi",
+   "category": "逛街",
+   "lat": 21.029,
+   "lng": 105.848,
+   "hours": {
+    "mon-sun": "09:00-21:00"
+   },
+   "price": "",
+   "intro": "越南與東南亞獨立設計品牌、天然保養品。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/8PdFXmqCqJGo98Cu7"
+   ],
+   "area": "河內老城區"
+  },
+  {
+   "id": "maison-marou",
+   "name": "Maison Marou Flagship",
+   "nameLocal": "Maison Marou",
+   "category": "逛街",
+   "lat": 21.0263,
+   "lng": 105.8534,
+   "hours": {
+    "mon-sun": "09:00-22:00"
+   },
+   "price": "",
+   "intro": "Marou 巧克力，伴手禮。",
+   "recommendedBy": "姵",
+   "links": [
+    "https://maps.app.goo.gl/krkivwjSu6jp9Uz87"
+   ],
+   "area": "河內老城區"
+  }
+ ],
+ "history": [
+  {
+   "era": "中國統治時期",
+   "years": "前 111 – 938",
+   "summary": "（內容待補）",
+   "places": [
+    "thang-long"
+   ]
+  },
+  {
+   "era": "各王朝獨立",
+   "years": "938 – 1858",
+   "summary": "（內容待補）李朝定都昇龍、文廟、陳朝、黎朝、阮朝。",
+   "places": [
+    "thang-long",
+    "temple-literature",
+    "tran-quoc"
+   ]
+  },
+  {
+   "era": "法國殖民",
+   "years": "1858 – 1954",
+   "summary": "（內容待補）",
+   "places": [
+    "opera-house",
+    "st-joseph",
+    "hoa-lo"
+   ]
+  },
+  {
+   "era": "越戰與統一",
+   "years": "1954 – 1975",
+   "summary": "（內容待補）",
+   "places": [
+    "hoa-lo",
+    "military-museum"
+   ]
+  },
+  {
+   "era": "現代",
+   "years": "1986 –",
+   "summary": "（內容待補）革新開放後的河內。",
+   "places": [
+    "old-quarter",
+    "train-street"
+   ]
+  }
+ ],
+ "reading": [
+  {
+   "group": "住宿",
+   "items": [
+    {
+     "title": "IG 推薦住宿",
+     "url": "https://www.instagram.com/p/DZr94g7D9Fm/"
+    }
+   ]
+  },
+  {
+   "group": "美食",
+   "items": [
+    {
+     "title": "米其林指南介紹",
+     "url": "https://www.starkitchen-vietnam-gift.com/zh/post/michelin-guide-hanoi-1"
+    },
+    {
+     "title": "outo 米其林餐廳整理",
+     "url": "https://www.outo.co/blogs/articles/michelin-restaurants-hanoi"
+    },
+    {
+     "title": "La Badiane 食記",
+     "url": "https://mandyenjoylife.com/la-badiane/"
+    }
+   ]
+  },
+  {
+   "group": "逛街",
+   "items": [
+    {
+     "title": "河內逛街街區整理（IG）",
+     "url": "https://www.instagram.com/reel/DWoHrXdCHto/"
+    },
+    {
+     "title": "THE RAW COMPOUND 介紹",
+     "url": "https://www.threads.com/@chance.tw_/post/DUQFiVZiarT"
+    }
+   ]
+  },
+  {
+   "group": "交通",
+   "items": [
+    {
+     "title": "河內機場交通",
+     "url": "https://www.starkitchen-vietnam-gift.com/zh/post/hanoi-airport-transportation-guide"
+    },
+    {
+     "title": "越南旅遊費用",
+     "url": "https://blog.golavisa.co/vietnam-cost/vietnam-travel-cost/"
+    }
+   ]
+  },
+  {
+   "group": "寧平、沙壩",
+   "items": [
+    {
+     "title": "寧平旅遊指南",
+     "url": "https://www.vietnamairlines.com/tw/zh-tw/plan-book/travel/travel-guide/du-lich-ninh-binh"
+    },
+    {
+     "title": "老柴村、Tả Van",
+     "url": "https://tsnio.com/lao-chai-ta-van/"
+    }
+   ]
+  },
+  {
+   "group": "行前",
+   "items": [
+    {
+     "title": "越南電子簽證",
+     "url": "https://evisa.immigration.gov.vn/web/guest/khai-thi-thuc-dien-tu/cap-thi-thuc-dien-tu"
+    },
+    {
+     "title": "簽證申請教學",
+     "url": "https://www.funliday.com/posts/2026-vietnam-visa-application/"
+    }
+   ]
+  }
+ ]
+}
