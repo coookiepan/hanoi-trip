@@ -76,27 +76,41 @@
   // ---------- 畫面 ----------
   function setTitle(t, showBack) { titleEl.textContent = t; backEl.classList.toggle('show', !!showBack); }
 
+  var ARROW_OUT = '<svg class="arrow" viewBox="0 0 56 56" fill="currentColor"><path d="M16 8h32v32h-8V21.7L15.7 46 10 40.3 34.3 16H16z"/></svg>';
+  var ARROW_IN  = '<svg class="arrow" viewBox="0 0 56 56" fill="currentColor"><path d="M40 48H8V16h8v18.3L40.3 10 46 15.7 21.7 40H40z"/></svg>';
+  var GO = '<span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>';
+
   function renderHome() {
     setTitle('越來越南', false);
     var today = todayDayNumber();
     var day = today && DATA.days.find(function (d) { return d.day === today; });
-    var hero = day
-      ? h`<div class="big">DAY ${day.day} · ${day.date}（${day.weekday}）</div><div class="sub">${esc(day.area)}${day.stay ? ' · 住 ' + esc(day.stay) : ''}</div>`
-      : h`<div class="big">${esc(DATA.trip.title)}</div><div class="sub">2026/12/19（六）～12/27（日）· 8 晚 9 天 · 4 人</div>`;
+    var balance = day
+      ? h`<a class="balance" href="#/itinerary/${day.day}"><span class="pill">${day.date}</span>
+          <div class="label">今天</div><div class="big">DAY ${day.day}<small>（${day.weekday}）</small></div>
+          <span class="chip">${esc(day.area)}${day.stay ? ' · 住 ' + esc(day.stay) : ''}</span></a>`
+      : h`<a class="balance" href="#/itinerary"><span class="pill">2026</span>
+          <div class="label">出發倒數</div><div class="big">${countdown()}<small> 天</small></div>
+          <span class="chip">12/19（六）～12/27（日） · 8 晚 9 天 · 4 人</span></a>`;
     var next = '';
     if (day) {
       next = '<div class="section-title">今天的行程</div>' + day.items.slice(0, 4).map(itemHTML).join('') +
         h`<a class="btn ghost" href="#/itinerary/${day.day}">看全天</a>`;
     }
     view.innerHTML = h`
-      <a class="hero" href="${day ? '#/itinerary/' + day.day : '#/itinerary'}">${hero}</a>
+      <div class="headline">越來<br>越南 <span class="spark">✦</span></div>
+      ${balance}
       <div class="grid">
-        <a class="tile" href="#/itinerary"><div class="icon">📅</div><div class="name">行程總表</div><div class="desc">每天的安排與狀態</div></a>
-        <a class="tile" href="#/history"><div class="icon">📜</div><div class="name">歷史速查</div><div class="desc">從中國統治到現代</div></a>
-        <a class="tile" href="#/nearby"><div class="icon">📍</div><div class="name">附近推薦</div><div class="desc">景點、小吃、逛街</div></a>
-        <a class="tile" href="#/reading"><div class="icon">🔗</div><div class="name">延伸閱讀</div><div class="desc">大家找到的文章</div></a>
+        <a class="tile purple" href="#/itinerary">${ARROW_OUT}<div><div class="name">行程總表 ${GO}</div><div class="desc">每天的安排與狀態</div></div></a>
+        <a class="tile lime" href="#/nearby">${ARROW_IN}<div><div class="name">附近推薦 ${GO}</div><div class="desc">景點、小吃、逛街</div></div></a>
+        <a class="tile sky" href="#/history">${ARROW_OUT}<div><div class="name">歷史速查 ${GO}</div><div class="desc">從中國統治到現代</div></div></a>
+        <a class="tile coral" href="#/reading">${ARROW_IN}<div><div class="name">延伸閱讀 ${GO}</div><div class="desc">大家找到的文章</div></div></a>
       </div>
       ${next}`;
+  }
+  function countdown() {
+    var n = hanoiNow();
+    var ms = Date.UTC(2026, 11, 19) - Date.UTC(n.y, n.m - 1, n.d);
+    return Math.max(0, Math.round(ms / 86400000));
   }
 
   function itemHTML(it) {
@@ -143,10 +157,10 @@
     var cats = ['全部', '景點', '小吃', '逛街'];
     var chips = cats.map(function (c) { return h`<button data-cat="${c}" class="${nearby.cat === c ? 'active' : ''}">${c}</button>`; }).join('');
     var head = nearby.pos
-      ? h`<div class="notice">已定位。距離是直線距離，實際步行會再遠一點。<button class="btn ghost" id="relocate" style="padding:4px 10px;margin-left:8px">重新定位</button></div>`
+      ? h`<div class="notice">已定位。距離是直線距離，實際步行會再遠一點。<button class="btn sm" id="relocate" style="margin-left:8px">重新定位</button></div>`
       : h`<div class="notice">${nearby.err ? esc(nearby.err) + '<br>' : ''}<button class="btn" id="locate">取得我的位置</button>　或先用住宿當起點：
-          <button class="btn ghost" data-from="gerbera-1" style="padding:6px 10px">Ba Đình</button>
-          <button class="btn ghost" data-from="gerbera-2" style="padding:6px 10px">老城區</button></div>`;
+          <button class="btn sm lime" data-from="gerbera-1">Ba Đình</button>
+          <button class="btn sm lime" data-from="gerbera-2">老城區</button></div>`;
     var list = DATA.places.filter(function (p) { return p.category !== '住宿' && (nearby.cat === '全部' || p.category === nearby.cat); });
     if (nearby.pos) {
       list.forEach(function (p) { p._d = distKm(nearby.pos.lat, nearby.pos.lng, p.lat, p.lng); });
@@ -195,17 +209,19 @@
     var maps = 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng;
     var grab = 'https://grab.onelink.me/2695613898?pid=inappsharing&c=' + encodeURIComponent(p.name) + '&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DBOOKING%26dropOffLatitude%3D' + p.lat + '%26dropOffLongitude%3D' + p.lng;
     view.innerHTML = h`
-      <div class="card">
-        <h3>${esc(p.name)}</h3>
-        <div class="meta">${esc(p.nameLocal)}</div>
+      <div class="place-hero">
+        <h2>${esc(p.name)}</h2>
+        <div class="local">${esc(p.nameLocal)}</div>
         <div class="meta">${esc(p.category)} · ${esc(p.area)}${p.price ? ' · ' + esc(p.price) : ''}${p.recommendedBy ? ' · ' + esc(p.recommendedBy) + '推薦' : ''}</div>
+      </div>
+      <div class="card">
         <p>${esc(p.intro || '（介紹待補）')}</p>
         <div class="row"><strong>開放時間</strong><span class="${st.cls}">${st.text}</span></div>
         <div class="meta">${hours}</div>
         ${days.length ? '<div class="meta" style="margin-top:8px">排在：' + days.map(function (d) { return h`<a class="badge s-固定" href="#/itinerary/${d.day}">DAY ${d.day} ${d.date}</a>`; }).join(' ') + '</div>' : ''}
         <div class="btnrow">
-          <a class="btn" href="${maps}" target="_blank" rel="noopener">Google Maps 導航</a>
-          <a class="btn ghost" href="${grab}" target="_blank" rel="noopener">叫 Grab</a>
+          <a class="btn lime" href="${maps}" target="_blank" rel="noopener">Google Maps 導航</a>
+          <a class="btn purple" href="${grab}" target="_blank" rel="noopener">叫 Grab</a>
         </div>
         ${p.links && p.links.length ? '<div class="linklist" style="margin-top:12px">' + p.links.map(function (u) { return h`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`; }).join('') + '</div>' : ''}
       </div>`;
