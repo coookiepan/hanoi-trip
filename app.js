@@ -1,5 +1,5 @@
 /* 越來越南 — 單頁 App
-   路由：#/  #/itinerary  #/itinerary/3  #/history  #/nearby  #/reading  #/place/<id>
+   路由：#/  #/itinerary  #/itinerary/3  #/history  #/history/<id>  #/nearby  #/reading  #/place/<id>
    所有內容都在 data.json，這支程式只負責畫出來。 */
 (function () {
   'use strict';
@@ -143,12 +143,71 @@
     if (active) active.scrollIntoView({ inline: 'center', block: 'nearest' });
   }
 
-  function renderHistory() {
+  // 歷史頁：body 是 Markdown（### 小標、**粗體**、> 引用、- 清單、| 表格 |），先跳脫再轉成 HTML
+  function md(src) {
+    var lines = esc(src).split('\n'), out = [], para = [], i = 0;
+    function inline(t) { return t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+    function flush() { if (para.length) { out.push('<p>' + para.join('<br>') + '</p>'); para = []; } }
+    function cells(row) { var c = row.split('|'); return c.slice(1, c.length - 1).map(function (x) { return inline(x.trim()); }); }
+    while (i < lines.length) {
+      var l = lines[i];
+      if (/^### /.test(l)) { flush(); out.push('<h4>' + inline(l.slice(4)) + '</h4>'); i++; }
+      else if (/^&gt;/.test(l)) {
+        flush(); var q = [];
+        while (i < lines.length && /^&gt;/.test(lines[i])) { q.push(inline(lines[i].replace(/^&gt; ?/, ''))); i++; }
+        out.push('<blockquote>' + q.join('<br>') + '</blockquote>');
+      }
+      else if (/^- /.test(l)) {
+        flush(); var li = [];
+        while (i < lines.length && /^- /.test(lines[i])) { li.push('<li>' + inline(lines[i].slice(2)) + '</li>'); i++; }
+        out.push('<ul>' + li.join('') + '</ul>');
+      }
+      else if (/^\|/.test(l)) {
+        flush(); var rows = [];
+        while (i < lines.length && /^\|/.test(lines[i])) { if (!/^\|[\s:|-]+\|$/.test(lines[i])) rows.push(cells(lines[i])); i++; }
+        var head = rows.shift() || [];
+        out.push('<div class="tablewrap"><table><thead><tr>' + head.map(function (c) { return '<th>' + c + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          rows.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>');
+      }
+      else if (!l.trim()) { flush(); i++; }
+      else { para.push(inline(l)); i++; }
+    }
+    flush();
+    return out.join('');
+  }
+
+  function renderHistory(openId) {
     setTitle('歷史速查', true);
-    view.innerHTML = DATA.history.map(function (e) {
-      var links = (e.places || []).map(function (id) { var p = place(id); return p ? h`<a class="badge type" href="#/place/${p.id}">${esc(p.name)}</a>` : ''; }).join(' ');
-      return h`<div class="era"><h3>${esc(e.era)}</h3><div class="years">${esc(e.years)}</div><p>${esc(e.summary)}</p><div class="badges">${links}</div></div>`;
-    }).join('');
+    var chips = DATA.history.map(function (e) { return h`<button data-era="${e.id}">${esc(e.era)}</button>`; }).join('');
+    view.innerHTML = h`<div class="chips">${chips}</div>` + DATA.history.map(function (e, idx) {
+      var sites = (e.sites || []).map(function (s) {
+        var p = s.placeId && place(s.placeId);
+        var href = p ? '#/place/' + p.id : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.nameVn);
+        var ext = p ? '' : ' target="_blank" rel="noopener"';
+        return h`<a class="site" href="${href}"${ext}>
+          <div class="row"><strong>${esc(s.name)}</strong><span class="badge ${p ? 's-固定' : 'type'}">${p ? '地點頁' : (s.offCity ? '河內市外' : 'Google Maps')}</span></div>
+          <div class="vn">${esc(s.nameVn)}</div>
+          <div class="meta">${esc(s.note)}</div></a>`;
+      }).join('');
+      return h`<section class="era" id="era-${e.id}">
+        <div class="years">${esc(e.years)}</div>
+        <h3>${esc(e.title)}</h3>
+        <div class="sub">${esc(e.subtitle)}</div>
+        <p class="takeaway">${esc(e.takeaway)}</p>
+        <details${e.id === openId ? ' open' : ''}><summary>讀全文</summary>
+          <div class="body">${md(e.body)}</div>
+          ${sites ? '<div class="section-title sm">相關景點</div>' + sites : ''}
+        </details>
+      </section>`;
+    }).join('') + '<p class="notice">內容整理自高夏《越南：世界史的失語者》（聯經，2018）。</p>';
+    view.querySelectorAll('.chips button').forEach(function (b) {
+      b.onclick = function () {
+        var sec = document.getElementById('era-' + b.dataset.era);
+        sec.querySelector('details').open = true;
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+    });
+    if (openId) { var sec = document.getElementById('era-' + openId); if (sec) sec.scrollIntoView({ block: 'start' }); }
   }
 
   var nearby = { cat: '全部', pos: null, err: null };
@@ -206,6 +265,7 @@
     var st = openStatus(p);
     var hours = p.hours && Object.keys(p.hours).length ? Object.keys(p.hours).map(function (k) { return k + '：' + p.hours[k]; }).join('<br>') : '待補';
     var days = DATA.days.filter(function (d) { return d.items.some(function (i) { return i.placeId === p.id; }); });
+    var eras = DATA.history.filter(function (e) { return (e.sites || []).some(function (s) { return s.placeId === p.id; }); });
     var maps = 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng;
     var grab = 'https://grab.onelink.me/2695613898?pid=inappsharing&c=' + encodeURIComponent(p.name) + '&is_retargeting=true&af_dp=grab%3A%2F%2Fopen%3FscreenType%3DBOOKING%26dropOffLatitude%3D' + p.lat + '%26dropOffLongitude%3D' + p.lng;
     view.innerHTML = h`
@@ -219,6 +279,7 @@
         <div class="row"><strong>開放時間</strong><span class="${st.cls}">${st.text}</span></div>
         <div class="meta">${hours}</div>
         ${days.length ? '<div class="meta" style="margin-top:8px">排在：' + days.map(function (d) { return h`<a class="badge s-固定" href="#/itinerary/${d.day}">DAY ${d.day} ${d.date}</a>`; }).join(' ') + '</div>' : ''}
+        ${eras.length ? '<div class="meta" style="margin-top:8px">歷史：' + eras.map(function (e) { return h`<a class="badge s-選項" href="#/history/${e.id}">${esc(e.era)}</a>`; }).join(' ') + '</div>' : ''}
         <div class="btnrow">
           <a class="btn lime" href="${maps}" target="_blank" rel="noopener">Google Maps 導航</a>
           <a class="btn purple" href="${grab}" target="_blank" rel="noopener">叫 Grab</a>
@@ -237,7 +298,7 @@
     switch (name) {
       case 'home': return renderHome();
       case 'itinerary': return renderItinerary(parts[1]);
-      case 'history': return renderHistory();
+      case 'history': return renderHistory(parts[1]);
       case 'nearby': return renderNearby();
       case 'reading': return renderReading();
       case 'place': return renderPlace(parts[1]);

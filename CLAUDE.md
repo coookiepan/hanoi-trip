@@ -10,7 +10,7 @@ https://coookiepan.github.io/hanoi-trip/
 ## 技術
 - 純 HTML / CSS / JS，沒有框架、沒有打包工具、沒有 npm。改完直接 push 就上線（Pages 約 1 分鐘）。
 - PWA：`manifest.json` 加入主畫面，`sw.js` 離線快取。
-- 路由：`#/`、`#/itinerary/<day>`、`#/history`、`#/nearby`、`#/reading`、`#/place/<id>`。
+- 路由：`#/`、`#/itinerary/<day>`、`#/history`、`#/history/<id>`、`#/nearby`、`#/reading`、`#/place/<id>`。
 - 不要加 `type="module"`、不要拆成多個 html、不要用相對路徑跳頁。
 
 ## 檔案
@@ -33,7 +33,10 @@ days[]    { day, date "12/19", weekday "六", area, stay, items[] }
 places[]  { id, name, nameLocal, category, lat, lng, hours, price, intro, recommendedBy, links[], area }
             category: 景點 | 小吃 | 逛街 | 住宿（住宿不會出現在附近推薦）
             hours:    {"mon-sun":"08:00-17:00"} 或 {"mon-sat":"11:30-14:00,18:00-22:00","sun":"休"}
-history[] { era, years, summary, places[]  ← place id }
+history[] { id, era, years, title, subtitle, takeaway, body, sites[] }
+            body:   Markdown，app.js 只認 ### 小標、**粗體**、> 引用、- 清單、| 表格 |
+            sites[] { name, nameVn, note, offCity?, placeId? }
+                    有 placeId 連到地點頁，沒有就連 Google Maps 搜尋 nameVn
 reading[] { group, items[{ title, url }] }
 ```
 行程以 Google 試算表「越來越南行程表」為準（資料夾「2026越來越南🎄🇻🇳」），改行程先改試算表再同步進 `data.json`。
@@ -47,7 +50,7 @@ reading[] { group, items[{ title, url }] }
 ## 目前狀態與待辦
 - 行程總表：完成，與試算表 2026/10/11 版一致
 - 附近推薦：功能完成；`places[]` 的座標是粗估，要逐一校對；營業時間多數待補
-- 歷史速查：架構完成，五個時期的文字待寫
+- 歷史速查：完成，八個時期的文字整理自高夏《越南：世界史的失語者》
 - 延伸閱讀：連結已放，可再分組
 - 地點詳情：`intro` 多數待補
 - 尚未做：沙壩、下龍灣（在想去清單，未排進行程）
