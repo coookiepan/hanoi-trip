@@ -1,5 +1,5 @@
 /* 離線快取：App 本體先快取，data.json 走「先網路、失敗再用快取」 */
-var CACHE = 'hanoi-v3';
+var CACHE = 'hanoi-v4';
 var SHELL = ['./', './index.html', './style.css', './app.js', './manifest.json', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', function (e) {

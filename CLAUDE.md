@@ -10,7 +10,7 @@ https://coookiepan.github.io/hanoi-trip/
 ## 技術
 - 純 HTML / CSS / JS，沒有框架、沒有打包工具、沒有 npm。改完直接 push 就上線（Pages 約 1 分鐘）。
 - PWA：`manifest.json` 加入主畫面，`sw.js` 離線快取。
-- 路由：`#/`、`#/itinerary/<day>`、`#/history`、`#/history/<id>`、`#/nearby`、`#/reading`、`#/place/<id>`。
+- 路由：`#/`、`#/itinerary/<day>`、`#/history`、`#/history/<id>`、`#/nearby`、`#/reading`、`#/guide`、`#/guide/<id>`、`#/place/<id>`。
 - 不要加 `type="module"`、不要拆成多個 html、不要用相對路徑跳頁。
 
 ## 檔案
@@ -20,7 +20,7 @@ https://coookiepan.github.io/hanoi-trip/
 | `app.js` | 路由、各頁 render、河內時間、營業中判斷、定位與距離 |
 | `style.css` | 樣式，所有顏色在 `:root` |
 | `data.json` | **全部內容**。改內容只動這個檔 |
-| `sw.js` | 離線快取。改了任何檔案要把第 2 行 `hanoi-vN` 版本號加 1，手機才會更新 |
+| `sw.js` | 離線快取。改了任何檔案要把第 2 行 `hanoi-vN` 版本號加 1；新版裝好後 app.js 會自動重載一次 |
 | `icons/` | App 圖示 |
 
 ## data.json 結構
@@ -34,10 +34,13 @@ places[]  { id, name, nameLocal, category, lat, lng, hours, price, intro, recomm
             category: 景點 | 小吃 | 逛街 | 住宿（住宿不會出現在附近推薦）
             hours:    {"mon-sun":"08:00-17:00"} 或 {"mon-sat":"11:30-14:00,18:00-22:00","sun":"休"}
 history[] { id, era, years, title, subtitle, takeaway, body, sites[] }
-            body:   Markdown，app.js 只認 ### 小標、**粗體**、> 引用、- 清單、| 表格 |
+            body:   Markdown，app.js 認 ### 小標、**粗體**、`程式碼`、> 引用、- 與 1. 清單（可縮排）、| 表格 |、``` 區塊、網址、⚠
             sites[] { name, nameVn, note, offCity?, placeId? }
                     有 placeId 連到地點頁，沒有就連 Google Maps 搜尋 nameVn
 reading[] { group, items[{ title, url }] }
+guide     { title, notes[], parts[] }                ← 基礎知識，首頁方格下方的橫幅進入
+  parts[] { id, num "一", title, intro[], sections[] }
+    sections[] { id, num "1", title, body }          body 是 Markdown，### 小標會變成段落快速導航
 ```
 行程以 Google 試算表「越來越南行程表」為準（資料夾「2026越來越南🎄🇻🇳」），改行程先改試算表再同步進 `data.json`。
 
@@ -52,6 +55,7 @@ reading[] { group, items[{ title, url }] }
 - 附近推薦：功能完成；`places[]` 的座標是粗估，要逐一校對；營業時間多數待補
 - 歷史速查：完成，八個時期的文字整理自高夏《越南：世界史的失語者》
 - 延伸閱讀：連結已放，可再分組
+- 基礎知識：完成，20 節＋資料來源；內容有「⚠ 出發前再確認」標記的出發前要再查
 - 地點詳情：`intro` 多數待補
 - 尚未做：沙壩、下龍灣（在想去清單，未排進行程）
 

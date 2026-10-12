@@ -23,6 +23,7 @@
 - 地點：`places[]`，`hours` 寫法：`{"mon-sun":"08:00-17:00"}`、`{"mon-sat":"11:30-14:00,18:00-22:00","sun":"休"}`
 - 歷史：`history[]`，`body` 是 Markdown（### 小標、**粗體**、> 引用、- 清單、表格），`sites[]` 有 `placeId` 就連地點頁
 - 延伸閱讀：`reading[]`
+- 基礎知識：`guide.parts[].sections[]`，`body` 是 Markdown，`### ` 小標會變成段落快速導航
 
 改完 `sw.js` 第 2 行的版本號 `hanoi-vN` 加 1，手機才會抓到新版。
 

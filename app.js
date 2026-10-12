@@ -1,5 +1,5 @@
 /* 越來越南 — 單頁 App
-   路由：#/  #/itinerary  #/itinerary/3  #/history  #/history/<id>  #/nearby  #/reading  #/place/<id>
+   路由：#/  #/itinerary  #/itinerary/3  #/history  #/history/<id>  #/nearby  #/reading  #/guide  #/guide/<id>  #/place/<id>
    所有內容都在 data.json，這支程式只負責畫出來。 */
 (function () {
   'use strict';
@@ -105,7 +105,20 @@
         <a class="tile sky" href="#/history">${ARROW_OUT}<div><div class="name">歷史速查 ${GO}</div><div class="desc">從中國統治到現代</div></div></a>
         <a class="tile coral" href="#/reading">${ARROW_IN}<div><div class="name">延伸閱讀 ${GO}</div><div class="desc">大家找到的文章</div></div></a>
       </div>
+      ${guideTile()}
       ${next}`;
+  }
+  function guideTile() {
+    if (!DATA.guide) return '';
+    var n = guideSections().filter(function (x) { return x.sec.num; }).length;
+    var quick = [['visa', '簽證'], ['money', '認紙鈔'], ['emergency', '緊急電話'], ['city-transport', '交通'], ['menu', '看菜單'], ['phrases', '越南語']];
+    return h`<div class="wide">
+      <a class="wide-main" href="#/guide">
+        <div><div class="name">旅遊基礎知識 ${GO}</div><div class="desc">簽證、換錢、禮儀、交通、吃什麼、越南語，共 ${n} 個主題</div></div>
+        <svg class="book" viewBox="0 0 56 56" fill="currentColor"><path d="M8 10h17a4 4 0 0 1 3 1.4A4 4 0 0 1 31 10h17v34H31a3 3 0 0 0-3 2 3 3 0 0 0-3-2H8zm4 4v26h12.5c.5 0 1 .1 1.5.3V17a3 3 0 0 0-3-3zm32 0H33a3 3 0 0 0-3 3v23.3c.5-.2 1-.3 1.5-.3H44z"/></svg>
+      </a>
+      <div class="wide-chips">${quick.map(function (q) { return h`<a href="#/guide/${q[0]}">${q[1]}</a>`; }).join('')}</div>
+    </div>`;
   }
   function countdown() {
     var n = hanoiNow();
@@ -143,25 +156,53 @@
     if (active) active.scrollIntoView({ inline: 'center', block: 'nearest' });
   }
 
-  // 歷史頁：body 是 Markdown（### 小標、**粗體**、> 引用、- 清單、| 表格 |），先跳脫再轉成 HTML
-  function md(src) {
-    var lines = esc(src).split('\n'), out = [], para = [], i = 0;
-    function inline(t) { return t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); }
+  // Markdown 轉 HTML（歷史頁、基礎知識共用）。先整段跳脫，再逐行組 HTML。
+  // 支援：### 小標、**粗體**、`程式碼`、> 引用、- 與 1. 清單（可縮排巢狀）、| 表格 |、``` 程式碼區塊、--- 分隔、網址自動連結、⚠ 提醒
+  var WARN_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 1 21h22zm1 14h-2v2h2zm0-7h-2v5h2z"/></svg>';
+  function mdInline(t) {
+    t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+    t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    t = t.replace(/(https?:\/\/[^\s<）」]+?)([.,，。、）]*)(?=\s|$|<)/g, function (_, url, tail) {
+      var short = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      if (short.length > 36) short = short.slice(0, 34) + '…';
+      return '<a href="' + url + '" target="_blank" rel="noopener">' + short + '</a>' + tail;
+    });
+    t = t.replace(/⚠\s*(出發前再確認)?/g, function (_, w) { return '<span class="warn">' + WARN_ICON + (w || '') + '</span>'; });
+    return t;
+  }
+  function mdBlocks(lines) {
+    var out = [], para = [], i = 0;
     function flush() { if (para.length) { out.push('<p>' + para.join('<br>') + '</p>'); para = []; } }
-    function cells(row) { var c = row.split('|'); return c.slice(1, c.length - 1).map(function (x) { return inline(x.trim()); }); }
+    function cells(row) { var c = row.split('|'); return c.slice(1, c.length - 1).map(function (x) { return mdInline(x.trim()); }); }
+    function list() {
+      var root = { children: [] }, stack = [{ node: root, indent: -1 }];
+      while (i < lines.length) {
+        var m = lines[i].match(/^( *)(-|\d+\.) (.*)$/);
+        if (m) {
+          var indent = m[1].length;
+          while (stack.length > 1 && stack[stack.length - 1].indent >= indent) stack.pop();
+          var parent = stack[stack.length - 1].node;
+          if (!parent.type) parent.type = m[2] === '-' ? 'ul' : 'ol';
+          var item = { text: mdInline(m[3]), children: [] };
+          parent.children.push(item); stack.push({ node: item, indent: indent }); i++;
+        } else if (/^\s+\S/.test(lines[i]) && stack.length > 1) { stack[stack.length - 1].node.text += '<br>' + mdInline(lines[i].trim()); i++; }
+        else break;
+      }
+      function render(n) { return n.children.length ? '<' + n.type + '>' + n.children.map(function (c) { return '<li>' + c.text + render(c) + '</li>'; }).join('') + '</' + n.type + '>' : ''; }
+      return render(root);
+    }
     while (i < lines.length) {
       var l = lines[i];
-      if (/^### /.test(l)) { flush(); out.push('<h4>' + inline(l.slice(4)) + '</h4>'); i++; }
+      if (/^```/.test(l)) { flush(); var code = []; i++; while (i < lines.length && !/^```/.test(lines[i])) { code.push(lines[i]); i++; } i++; out.push('<pre>' + code.join('\n') + '</pre>'); }
+      else if (/^#{3,4} /.test(l)) { flush(); var lvl = l.indexOf(' '); out.push('<h' + (lvl + 1) + '>' + mdInline(l.slice(lvl + 1)).replace(/^(\d+-\d+)\s+/, '<span class="no">$1</span>') + '</h' + (lvl + 1) + '>'); i++; }
+      else if (/^\*\*[^*]+\*\*：?$/.test(l)) { flush(); out.push('<h5>' + mdInline(l) + '</h5>'); i++; }
+      else if (/^---+$/.test(l)) { flush(); i++; }
       else if (/^&gt;/.test(l)) {
         flush(); var q = [];
-        while (i < lines.length && /^&gt;/.test(lines[i])) { q.push(inline(lines[i].replace(/^&gt; ?/, ''))); i++; }
-        out.push('<blockquote>' + q.join('<br>') + '</blockquote>');
+        while (i < lines.length && /^&gt;/.test(lines[i])) { q.push(lines[i].replace(/^&gt; ?/, '')); i++; }
+        out.push('<blockquote>' + mdBlocks(q) + '</blockquote>');
       }
-      else if (/^- /.test(l)) {
-        flush(); var li = [];
-        while (i < lines.length && /^- /.test(lines[i])) { li.push('<li>' + inline(lines[i].slice(2)) + '</li>'); i++; }
-        out.push('<ul>' + li.join('') + '</ul>');
-      }
+      else if (/^ *(-|\d+\.) /.test(l)) { flush(); out.push(list()); }
       else if (/^\|/.test(l)) {
         flush(); var rows = [];
         while (i < lines.length && /^\|/.test(lines[i])) { if (!/^\|[\s:|-]+\|$/.test(lines[i])) rows.push(cells(lines[i])); i++; }
@@ -170,11 +211,12 @@
           rows.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>');
       }
       else if (!l.trim()) { flush(); i++; }
-      else { para.push(inline(l)); i++; }
+      else { para.push(mdInline(l)); i++; }
     }
     flush();
     return out.join('');
   }
+  function md(src) { return mdBlocks(esc(src).split('\n')); }
 
   function renderHistory(openId) {
     setTitle('歷史速查', true);
@@ -258,6 +300,103 @@
     }).join('');
   }
 
+  // ---------- 基礎知識 ----------
+  var TOC_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h3v3H4zm5 0h11v3H9zM4 10.5h3v3H4zm5 0h11v3H9zM4 16h3v3H4zm5 0h11v3H9z"/></svg>';
+  var PART_COLORS = ['purple', 'lime', 'sky', 'coral'];
+  function guideSections() { var all = []; DATA.guide.parts.forEach(function (p) { p.sections.forEach(function (sec) { all.push({ part: p, sec: sec }); }); }); return all; }
+  function subheads(body) { var m = body.match(/^### .+$/gm) || []; return m.map(function (x) { return x.slice(4).replace(/^\d+-\d+\s*/, ''); }); }
+
+  function renderGuide() {
+    var g = DATA.guide;
+    setTitle('基礎知識', true);
+    var chips = g.parts.map(function (p) { return h`<button data-part="${p.id}">${esc(p.num)}・${esc(p.title)}</button>`; }).join('');
+    var notes = g.notes.map(function (n) { return h`<li>${mdInline(esc(n))}</li>`; }).join('');
+    var parts = g.parts.map(function (p, idx) {
+      var rows = p.sections.map(function (sec) {
+        var subs = subheads(sec.body);
+        return h`<a class="guide-row" href="#/guide/${sec.id}" data-q="${esc((sec.title + ' ' + sec.body).toLowerCase())}">
+          <span class="n ${PART_COLORS[idx % 4]}">${sec.num ? esc(sec.num) : '※'}</span>
+          <div><div class="t">${esc(sec.title)}</div>${subs.length ? h`<div class="meta">${esc(subs.join(' · '))}</div>` : ''}</div>
+          ${GO}</a>`;
+      }).join('');
+      return h`<section class="guide-part" id="part-${p.id}">
+        <div class="part-head"><span class="num ${PART_COLORS[idx % 4]}">${esc(p.num)}</span><h3>${esc(p.title)}</h3></div>
+        ${p.intro && p.intro.length ? h`<p class="part-intro">${p.intro.map(esc).join('<br>')}</p>` : ''}
+        ${rows}</section>`;
+    }).join('');
+    view.innerHTML = h`
+      <div class="guide-hero">
+        <h2>${esc(g.title)}</h2>
+        <ul class="notes">${notes}</ul>
+        <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="guide-q" type="search" placeholder="搜尋：簽證、Grab、phở、廁所…" autocomplete="off"></label>
+      </div>
+      <div class="chips" id="part-chips">${chips}</div>
+      ${parts}
+      <p class="empty" id="guide-empty" hidden>沒有符合的主題</p>`;
+    view.querySelectorAll('#part-chips button').forEach(function (b) {
+      b.onclick = function () { scrollToEl(document.getElementById('part-' + b.dataset.part)); };
+    });
+    var q = document.getElementById('guide-q');
+    q.oninput = function () {
+      var kw = q.value.trim().toLowerCase(), any = false;
+      view.querySelectorAll('.guide-part').forEach(function (part) {
+        var shown = 0;
+        part.querySelectorAll('.guide-row').forEach(function (r) { var hit = !kw || r.dataset.q.indexOf(kw) >= 0; r.hidden = !hit; if (hit) shown++; });
+        part.hidden = !shown; any = any || shown > 0;
+      });
+      document.getElementById('part-chips').hidden = !!kw;
+      document.getElementById('guide-empty').hidden = any;
+    };
+  }
+
+  function renderGuideSection(id) {
+    var all = guideSections(), idx = -1;
+    all.forEach(function (x, i) { if (x.sec.id === id) idx = i; });
+    if (idx < 0) { location.hash = '#/guide'; return; }
+    var cur = all[idx], sec = cur.sec, prev = all[idx - 1], next = all[idx + 1];
+    setTitle(sec.num ? sec.num + '. ' + sec.title : sec.title, true);
+    view.innerHTML = h`
+      <div class="guide-head"><span class="chip">${esc(cur.part.num)}・${esc(cur.part.title)}</span><h2>${esc(sec.title)}</h2></div>
+      <div class="subnav chips" id="subnav" hidden></div>
+      <div class="prose" id="prose">${md(sec.body)}</div>
+      <div class="pager">
+        ${prev ? h`<a href="#/guide/${prev.sec.id}"><small>上一節</small>${esc(prev.sec.num ? prev.sec.num + '. ' : '')}${esc(prev.sec.title)}</a>` : '<span></span>'}
+        ${next ? h`<a class="next" href="#/guide/${next.sec.id}"><small>下一節</small>${esc(next.sec.num ? next.sec.num + '. ' : '')}${esc(next.sec.title)}</a>` : '<span></span>'}
+      </div>
+      <a class="fab" href="#/guide" aria-label="回目錄">${TOC_ICON}<span>目錄</span></a>`;
+    // 段落快速導航：從 ### 小標產生膠囊，捲動時標示目前段落
+    var heads = Array.prototype.slice.call(view.querySelectorAll('#prose h4'));
+    if (heads.length > 1) {
+      var nav = document.getElementById('subnav');
+      nav.hidden = false; nav.style.top = topbarH() + 'px';
+      nav.innerHTML = heads.map(function (hd, i) { hd.id = 'h-' + i; return h`<button data-h="${i}">${esc(hd.textContent.replace(/^\d+-\d+\s*/, ''))}</button>`; }).join('');
+      var btns = nav.querySelectorAll('button');
+      btns.forEach(function (b) { b.onclick = function () { scrollToEl(heads[+b.dataset.h]); }; });
+      onScroll = function () {
+        var line = topbarH() + nav.offsetHeight + 12, active = 0;
+        heads.forEach(function (hd, i) { if (hd.getBoundingClientRect().top <= line) active = i; });
+        btns.forEach(function (b, i) { b.classList.toggle('active', i === active); });
+        var ab = btns[active]; if (ab) ab.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+      };
+      onScroll();
+    }
+  }
+  var onScroll = null, ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!onScroll || ticking) return;
+    ticking = true; requestAnimationFrame(function () { ticking = false; if (onScroll) onScroll(); });
+  }, { passive: true });
+  function topbarH() { return document.getElementById('topbar').offsetHeight; }
+  function scrollToEl(el) {
+    if (!el) return;
+    var nav = document.getElementById('subnav');
+    var offset = topbarH() + (nav && !nav.hidden ? nav.offsetHeight : 0) + 8;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && /^#\/guide\/./.test(location.hash)) location.hash = '#/guide';
+  });
+
   function renderPlace(id) {
     var p = place(id);
     if (!p) { view.innerHTML = '<p class="loading">找不到這個地點</p>'; return setTitle('地點', true); }
@@ -295,12 +434,14 @@
     var name = parts[0] || 'home';
     document.querySelectorAll('#tabbar a').forEach(function (a) { a.classList.toggle('active', a.dataset.route === name); });
     window.scrollTo(0, 0);
+    onScroll = null;
     switch (name) {
       case 'home': return renderHome();
       case 'itinerary': return renderItinerary(parts[1]);
       case 'history': return renderHistory(parts[1]);
       case 'nearby': return renderNearby();
       case 'reading': return renderReading();
+      case 'guide': return parts[1] ? renderGuideSection(parts[1]) : renderGuide();
       case 'place': return renderPlace(parts[1]);
       default: location.hash = '#/';
     }
@@ -323,6 +464,10 @@
   });
 
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (hadController && !reloaded) { reloaded = true; location.reload(); }
+    });
     navigator.serviceWorker.register('sw.js').catch(function () {});
   }
 })();
